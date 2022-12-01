@@ -15,14 +15,14 @@ int main(int argc, char* args[])
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
     game = new Game();
-    game->init("Pac-Man", 128, 128, 640, 480);
+    game->init("Pac-Man", 128, 128, 840, 640);
 
     while (game->running()) {
         frameStart = chrono::steady_clock::now();
 
-        game->handleEvents();
         game->update();
         game->render();
+        game->handleEvents();
 
         this_thread::sleep_for(frameDelay - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - frameStart));
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - frameStart);
