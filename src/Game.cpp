@@ -48,6 +48,14 @@ void Game::update() {
             player->resetObjectDirection();
         }
     }
+    for (auto& c : pointColliders) {
+        if (Collision::AABB(player->getPos(), c->getPos(), 1, 1)) {
+            cout << "Collision Detected" << endl;
+            cout << "P: " << player->getPos() << endl;
+            cout << "W: " << c->getPos() << endl;
+            c->setInvisible();
+        }
+    }
 }
 
 void Game::render() {

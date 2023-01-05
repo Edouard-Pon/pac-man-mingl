@@ -18,7 +18,7 @@ void GameObject::Update() {
 
 void GameObject::Render() {
 //    sprite->draw(*window);
-    *window << *sprite;
+    if (!objectProperty.invisible) *window << *sprite;
 }
 
 void GameObject::Move() {
@@ -26,25 +26,25 @@ void GameObject::Move() {
 
     if (window->isPressed({'w', false})) {
         resetObjectDirection();
-        objectDirection.up = true;
+        objectProperty.up = true;
     }
     if (window->isPressed({'s', false})) {
         resetObjectDirection();
-        objectDirection.down = true;
+        objectProperty.down = true;
     }
     if (window->isPressed({'a', false})) {
         resetObjectDirection();
-        objectDirection.left = true;
+        objectProperty.left = true;
     }
     if (window->isPressed({'d', false})) {
         resetObjectDirection();
-        objectDirection.right = true;
+        objectProperty.right = true;
     }
 
-    if (objectDirection.up) yPos = spritePos.getY() - 5;
-    if (objectDirection.down) yPos = spritePos.getY() + 5;
-    if (objectDirection.left) xPos = spritePos.getX() - 5;
-    if (objectDirection.right) xPos = spritePos.getX() + 5;
+    if (objectProperty.up) yPos = spritePos.getY() - 5;
+    if (objectProperty.down) yPos = spritePos.getY() + 5;
+    if (objectProperty.left) xPos = spritePos.getX() - 5;
+    if (objectProperty.right) xPos = spritePos.getX() + 5;
 }
 
 Vec2D GameObject::getPos() {
@@ -57,8 +57,12 @@ void GameObject::setPos(const int x, const int y) {
 }
 
 void GameObject::resetObjectDirection() {
-    objectDirection.up = false;
-    objectDirection.down = false;
-    objectDirection.right = false;
-    objectDirection.left = false;
+    objectProperty.up = false;
+    objectProperty.down = false;
+    objectProperty.right = false;
+    objectProperty.left = false;
+}
+
+void GameObject::setInvisible() {
+    objectProperty.invisible = true;
 }

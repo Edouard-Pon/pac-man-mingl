@@ -22,6 +22,7 @@ public:
     Vec2D getPos();
     void setPos(const int x, const int y);
     void resetObjectDirection();
+    void setInvisible();
 
 private:
     int xPos;
@@ -32,7 +33,8 @@ private:
         bool down = false;
         bool right = false;
         bool left = false;
-    } objectDirection;
+        bool invisible = false;
+    } objectProperty;
 
     Sprite* sprite;
     MinGL* window;
