@@ -45,10 +45,9 @@ void Game::render() {
     window->clearScreen();
 
     for (auto& c : gameColliders) c->Render();
+
     player->Render();
     enemy->Render();
-
-    for (auto& c : gameColliders) c->Render();
 
     window->finishFrame();
     window->getEventManager().clearEvents();

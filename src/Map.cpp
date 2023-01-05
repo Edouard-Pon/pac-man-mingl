@@ -1,5 +1,4 @@
 #include "Map.h"
-#include "SpriteManager.h"
 
 // For Test; Changing Soon
 int testMap[16][21] = {

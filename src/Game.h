@@ -34,8 +34,6 @@ private:
     MinGL *window;
     GameObject* player;
     GameObject* enemy;
-    GameObject* wallTest;
-    GameObject* wallTest2;
     Map* levelMap;
     vector<unique_ptr<GameObject>> gameColliders;
 
