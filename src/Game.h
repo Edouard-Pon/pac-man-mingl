@@ -38,6 +38,7 @@ private:
     vector<unique_ptr<GameObject>> wallColliders;
     vector<unique_ptr<GameObject>> pointColliders;
     vector<unique_ptr<GameObject>> invisibleHitBoxColliders;
+    vector<unique_ptr<GameObject>> enemyColliders;
 
 };
 

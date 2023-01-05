@@ -20,12 +20,14 @@ public:
     void TestLoadMap(int arr[16][21]);
     void LoadMap(MinGL* window, vector<unique_ptr<GameObject>>& gameColliders,
                  vector<unique_ptr<GameObject>>& pointColliders,
-                 vector<unique_ptr<GameObject>>& invisibleHitBoxColliders);
+                 vector<unique_ptr<GameObject>>& invisibleHitBoxColliders,
+                 vector<unique_ptr<GameObject>>& enemyColliders);
 
 private:
     GameObject* wall;
     GameObject* point;
     GameObject* invHitBox;
+    GameObject* enemy;
 
     //  For Test; Changing Soon;
     int map[20][25];

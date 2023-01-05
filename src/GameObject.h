@@ -23,6 +23,10 @@ public:
     void setPos(const int x, const int y);
     void resetObjectDirection();
     void setInvisible();
+    void killObject();
+    void addScore();
+    bool isInvisible() const;
+    unsigned getScore() const;
 
 private:
     int xPos;
@@ -34,6 +38,8 @@ private:
         bool right = false;
         bool left = false;
         bool invisible = false;
+        bool dead = false;
+        unsigned score = 0;
     } objectProperty;
 
     Sprite* sprite;

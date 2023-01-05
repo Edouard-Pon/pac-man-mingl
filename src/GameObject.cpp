@@ -18,7 +18,7 @@ void GameObject::Update() {
 
 void GameObject::Render() {
 //    sprite->draw(*window);
-    if (!objectProperty.invisible) *window << *sprite;
+    if (!objectProperty.invisible && !objectProperty.dead) *window << *sprite;
 }
 
 void GameObject::Move() {
@@ -65,4 +65,20 @@ void GameObject::resetObjectDirection() {
 
 void GameObject::setInvisible() {
     objectProperty.invisible = true;
+}
+
+void GameObject::killObject() {
+    objectProperty.dead = true;
+}
+
+void GameObject::addScore() {
+    objectProperty.score += 100;
+}
+
+bool GameObject::isInvisible() const {
+    return objectProperty.invisible;
+}
+
+unsigned GameObject::getScore() const {
+    return objectProperty.score;
 }
