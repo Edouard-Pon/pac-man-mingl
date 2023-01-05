@@ -7,6 +7,7 @@
 #include "mingl/mingl.h"
 #include "mingl/graphics/vec2d.h"
 #include "GameObject.h"
+#include "Map.h"
 
 
 using namespace std;
@@ -35,7 +36,8 @@ private:
     GameObject* enemy;
     GameObject* wallTest;
     GameObject* wallTest2;
-    vector<GameObject>* gameColliders;
+    Map* levelMap;
+    vector<unique_ptr<GameObject>> gameColliders;
 
 };
 

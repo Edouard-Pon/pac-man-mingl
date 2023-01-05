@@ -14,8 +14,9 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     player = new GameObject("../assets/pacman.si2", window, 40, 40);
     enemy = new GameObject("../assets/phantom.si2", window, 80, 40);
-    wallTest = new GameObject("../assets/wall.si2", window, 600, 400);
-    wallTest2 = new GameObject("../assets/wall.si2", window, 700, 400);
+    levelMap = new Map();
+
+    levelMap->LoadMap(window,gameColliders);
 }
 
 void Game::handleEvents() {
@@ -24,28 +25,30 @@ void Game::handleEvents() {
 
 void Game::update() {
     Vec2D tmp = player->getPos();
+    cout << "tmp: " << tmp << endl;
 
     player->Update();
     enemy->Update();
 
-    if (Collision::AABB(player->getPos(), wallTest->getPos(), 40, 40)) {
-        cout << "Collision Detected" << endl;
-        cout << "P: " << player->getPos() << endl;
-        cout << "W: " << wallTest->getPos() << endl;
-        player->setPos(tmp.getX(), tmp.getY());
-    } else {
-        player->Move();
+    player->Move();
+    for (auto& c : gameColliders) {
+        if (Collision::AABB(player->getPos(), c->getPos(), 40, 40)) {
+            cout << "Collision Detected" << endl;
+            cout << "P: " << player->getPos() << endl;
+            cout << "W: " << c->getPos() << endl;
+            player->setPos(tmp.getX(), tmp.getY());
+        }
     }
-
 }
 
 void Game::render() {
     window->clearScreen();
 
+    for (auto& c : gameColliders) c->Render();
     player->Render();
     enemy->Render();
-    wallTest->Render();
-    wallTest2->Render();
+
+    for (auto& c : gameColliders) c->Render();
 
     window->finishFrame();
     window->getEventManager().clearEvents();

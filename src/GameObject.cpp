@@ -35,7 +35,7 @@ void GameObject::Move() {
 }
 
 Vec2D GameObject::getPos() {
-    return sprite->getPosition();
+    return Vec2D(xPos, yPos);
 }
 
 void GameObject::setPos(const int x, const int y) {
