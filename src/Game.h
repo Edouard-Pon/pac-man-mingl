@@ -35,7 +35,9 @@ private:
     GameObject* player;
     GameObject* enemy;
     Map* levelMap;
-    vector<unique_ptr<GameObject>> gameColliders;
+    vector<unique_ptr<GameObject>> wallColliders;
+    vector<unique_ptr<GameObject>> pointColliders;
+    vector<unique_ptr<GameObject>> invisibleHitBoxColliders;
 
 };
 

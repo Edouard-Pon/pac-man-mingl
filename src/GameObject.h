@@ -21,10 +21,18 @@ public:
     void Move();
     Vec2D getPos();
     void setPos(const int x, const int y);
+    void resetObjectDirection();
 
 private:
     int xPos;
     int yPos;
+
+    struct {
+        bool up = false;
+        bool down = false;
+        bool right = false;
+        bool left = false;
+    } objectDirection;
 
     Sprite* sprite;
     MinGL* window;

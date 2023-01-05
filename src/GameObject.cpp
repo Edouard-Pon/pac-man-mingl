@@ -24,14 +24,27 @@ void GameObject::Render() {
 void GameObject::Move() {
     Vec2D spritePos = sprite->getPosition();
 
-    if (window->isPressed({'w', false}))
-        yPos = spritePos.getY() - 5;
-    if (window->isPressed({'s', false}))
-        yPos = spritePos.getY() + 5;
-    if (window->isPressed({'a', false}))
-        xPos = spritePos.getX() - 5;
-    if (window->isPressed({'d', false}))
-        xPos = spritePos.getX() + 5;
+    if (window->isPressed({'w', false})) {
+        resetObjectDirection();
+        objectDirection.up = true;
+    }
+    if (window->isPressed({'s', false})) {
+        resetObjectDirection();
+        objectDirection.down = true;
+    }
+    if (window->isPressed({'a', false})) {
+        resetObjectDirection();
+        objectDirection.left = true;
+    }
+    if (window->isPressed({'d', false})) {
+        resetObjectDirection();
+        objectDirection.right = true;
+    }
+
+    if (objectDirection.up) yPos = spritePos.getY() - 5;
+    if (objectDirection.down) yPos = spritePos.getY() + 5;
+    if (objectDirection.left) xPos = spritePos.getX() - 5;
+    if (objectDirection.right) xPos = spritePos.getX() + 5;
 }
 
 Vec2D GameObject::getPos() {
@@ -41,4 +54,11 @@ Vec2D GameObject::getPos() {
 void GameObject::setPos(const int x, const int y) {
     xPos = x;
     yPos = y;
+}
+
+void GameObject::resetObjectDirection() {
+    objectDirection.up = false;
+    objectDirection.down = false;
+    objectDirection.right = false;
+    objectDirection.left = false;
 }
