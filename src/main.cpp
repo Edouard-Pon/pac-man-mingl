@@ -15,7 +15,7 @@ int main(int argc, char* args[])
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
     game = new Game();
-    game->init("Pac-Man", 128, 128, 840, 620);
+    game->init("Pac-Man", 128, 128, 840, 640);
 
     while (game->running()) {
         frameStart = chrono::steady_clock::now();

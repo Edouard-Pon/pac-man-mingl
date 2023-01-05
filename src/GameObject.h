@@ -1,8 +1,14 @@
 #ifndef PACMAN_MINGL_GAMEOBJECT_H
 #define PACMAN_MINGL_GAMEOBJECT_H
 
-#include "Game.h"
+#include <iostream>
+#include "mingl/gui/sprite.h"
+#include "mingl/mingl.h"
+#include "mingl/graphics/vec2d.h"
 
+using namespace std;
+using namespace nsGraphics;
+using namespace nsGui;
 
 class GameObject {
 
@@ -12,6 +18,9 @@ public:
 
     void Update();
     void Render();
+    void Move();
+    Vec2D getPos();
+    void setPos(const int x, const int y);
 
 private:
     int xPos;

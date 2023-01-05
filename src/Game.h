@@ -2,12 +2,12 @@
 #define PACMAN_MINGL_GAME_H
 
 #include <iostream>
+#include <vector>
 #include "mingl/gui/sprite.h"
 #include "mingl/mingl.h"
-#include "mingl/shape/circle.h"
-#include "mingl/shape/triangle.h"
-#include "mingl/shape/line.h"
 #include "mingl/graphics/vec2d.h"
+#include "GameObject.h"
+
 
 using namespace std;
 using namespace nsGraphics;
@@ -31,6 +31,11 @@ public:
 private:
     bool isRunning;
     MinGL *window;
+    GameObject* player;
+    GameObject* enemy;
+    GameObject* wallTest;
+    GameObject* wallTest2;
+    vector<GameObject>* gameColliders;
 
 };
 

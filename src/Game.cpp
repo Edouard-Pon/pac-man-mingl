@@ -1,9 +1,6 @@
 #include "Game.h"
-#include "GameObject.h"
+#include "Collision.h"
 
-
-GameObject* player;
-GameObject* enemy;
 
 Game::Game() {}
 
@@ -15,8 +12,10 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
     window->initGraphic();
     isRunning = true;
 
-    player = new GameObject("../assets/pacman.si2", window, 0, 0);
-    enemy = new GameObject("../assets/phantom.si2", window, 100, 100);
+    player = new GameObject("../assets/pacman.si2", window, 40, 40);
+    enemy = new GameObject("../assets/phantom.si2", window, 80, 40);
+    wallTest = new GameObject("../assets/wall.si2", window, 600, 400);
+    wallTest2 = new GameObject("../assets/wall.si2", window, 700, 400);
 }
 
 void Game::handleEvents() {
@@ -24,8 +23,20 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
+    Vec2D tmp = player->getPos();
+
     player->Update();
     enemy->Update();
+
+    if (Collision::AABB(player->getPos(), wallTest->getPos(), 40, 40)) {
+        cout << "Collision Detected" << endl;
+        cout << "P: " << player->getPos() << endl;
+        cout << "W: " << wallTest->getPos() << endl;
+        player->setPos(tmp.getX(), tmp.getY());
+    } else {
+        player->Move();
+    }
+
 }
 
 void Game::render() {
@@ -33,6 +44,8 @@ void Game::render() {
 
     player->Render();
     enemy->Render();
+    wallTest->Render();
+    wallTest2->Render();
 
     window->finishFrame();
     window->getEventManager().clearEvents();
