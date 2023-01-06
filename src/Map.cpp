@@ -11,7 +11,7 @@ int testMap[16][21] = {
         {1,1,1,1,2,1,1,2,1,2,1,2,1,2,1,1,2,1,1,1,1},
         {1,1,1,1,2,1,2,3,2,3,2,3,2,3,2,1,2,1,1,1,1},
         {1,2,2,2,3,2,3,1,1,0,1,0,1,1,3,2,3,2,2,2,1},
-        {1,2,1,1,2,1,2,1,4,4,4,4,4,1,2,1,2,1,1,2,1},
+        {1,2,1,1,2,1,2,1,4,5,6,7,8,1,2,1,2,1,1,2,1},
         {1,2,2,2,3,1,2,1,0,1,1,1,0,1,2,1,3,2,2,2,1},
         {1,1,1,1,3,2,3,2,3,2,3,2,3,2,3,2,3,1,1,1,1},
         {1,2,2,2,3,1,1,1,2,1,2,1,2,1,1,1,3,2,2,2,1},
@@ -58,7 +58,23 @@ void Map::LoadMap(MinGL* window, vector<unique_ptr<GameObject>>& wallColliders,
                     invisibleHitBoxColliders.emplace_back(invHitBox);
                     break;
                 case 4:
-                    enemy = new GameObject("../assets/phantom.si2", window, column * 40, row * 40);
+                    enemy = new GameObject("../assets/phantomRed.si2", window, column * 40, row * 40);
+                    enemyColliders.emplace_back(enemy);
+                    break;
+                case 5:
+                    enemy = new GameObject("../assets/phantomYellow.si2", window, column * 40, row * 40);
+                    enemyColliders.emplace_back(enemy);
+                    break;
+                case 6:
+                    enemy = new GameObject("../assets/phantomRose.si2", window, column * 40, row * 40);
+                    enemyColliders.emplace_back(enemy);
+                    break;
+                case 7:
+                    enemy = new GameObject("../assets/phantomCyan.si2", window, column * 40, row * 40);
+                    enemyColliders.emplace_back(enemy);
+                    break;
+                case 8:
+                    enemy = new GameObject("../assets/phantomGreen.si2", window, column * 40, row * 40);
                     enemyColliders.emplace_back(enemy);
                     break;
                 default:

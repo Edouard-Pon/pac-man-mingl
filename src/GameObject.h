@@ -30,6 +30,7 @@ public:
     void setObjectDirection(unsigned direction);
     void setTempPosition();
     Vec2D getTempPosition();
+    void setMovementSpeed(int speed);
 
 private:
     int xPos;
@@ -44,6 +45,7 @@ private:
         bool invisible = false;
         bool dead = false;
         unsigned score = 0;
+        int movementSpeed = 5;
     } objectProperty;
 
     Sprite* sprite;

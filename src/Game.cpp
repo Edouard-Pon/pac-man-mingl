@@ -19,7 +19,10 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     levelMap->LoadMap(window, wallColliders, pointColliders, invisibleHitBoxColliders, enemyColliders);
 
-    for (auto& c : enemyColliders) c->setObjectDirection(1);
+    for (auto& c : enemyColliders) {
+        c->setObjectDirection(1);
+        c->setMovementSpeed(4);
+    }
 }
 
 void Game::handleEvents() {

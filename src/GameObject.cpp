@@ -43,10 +43,10 @@ void GameObject::Move(const bool isPlayer) {
         }
     }
 
-    if (objectProperty.up) yPos = spritePos.getY() - 5;
-    if (objectProperty.down) yPos = spritePos.getY() + 5;
-    if (objectProperty.left) xPos = spritePos.getX() - 5;
-    if (objectProperty.right) xPos = spritePos.getX() + 5;
+    if (objectProperty.up) yPos = spritePos.getY() - objectProperty.movementSpeed;
+    if (objectProperty.down) yPos = spritePos.getY() + objectProperty.movementSpeed;
+    if (objectProperty.left) xPos = spritePos.getX() - objectProperty.movementSpeed;
+    if (objectProperty.right) xPos = spritePos.getX() + objectProperty.movementSpeed;
 }
 
 Vec2D GameObject::getPos() {
@@ -110,4 +110,8 @@ void GameObject::setTempPosition() {
 
 Vec2D GameObject::getTempPosition() {
     return tempPosition;
+}
+
+void GameObject::setMovementSpeed(int speed) {
+    objectProperty.movementSpeed = speed;
 }
