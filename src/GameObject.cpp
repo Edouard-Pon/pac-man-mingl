@@ -21,24 +21,26 @@ void GameObject::Render() {
     if (!objectProperty.invisible && !objectProperty.dead) *window << *sprite;
 }
 
-void GameObject::Move() {
+void GameObject::Move(const bool isPlayer) {
     Vec2D spritePos = sprite->getPosition();
 
-    if (window->isPressed({'w', false})) {
-        resetObjectDirection();
-        objectProperty.up = true;
-    }
-    if (window->isPressed({'s', false})) {
-        resetObjectDirection();
-        objectProperty.down = true;
-    }
-    if (window->isPressed({'a', false})) {
-        resetObjectDirection();
-        objectProperty.left = true;
-    }
-    if (window->isPressed({'d', false})) {
-        resetObjectDirection();
-        objectProperty.right = true;
+    if (isPlayer) {
+        if (window->isPressed({'w', false})) {
+            resetObjectDirection();
+            objectProperty.up = true;
+        }
+        if (window->isPressed({'s', false})) {
+            resetObjectDirection();
+            objectProperty.down = true;
+        }
+        if (window->isPressed({'a', false})) {
+            resetObjectDirection();
+            objectProperty.left = true;
+        }
+        if (window->isPressed({'d', false})) {
+            resetObjectDirection();
+            objectProperty.right = true;
+        }
     }
 
     if (objectProperty.up) yPos = spritePos.getY() - 5;
@@ -81,4 +83,31 @@ bool GameObject::isInvisible() const {
 
 unsigned GameObject::getScore() const {
     return objectProperty.score;
+}
+
+void GameObject::setObjectDirection(const unsigned direction) {
+    switch (direction) {
+        case 1:
+            objectProperty.up = true;
+            break;
+        case 2:
+            objectProperty.down = true;
+            break;
+        case 3:
+            objectProperty.right = true;
+            break;
+        case 4:
+            objectProperty.left = true;
+            break;
+        default:
+            break;
+    }
+}
+
+void GameObject::setTempPosition() {
+    tempPosition = { xPos, yPos };
+}
+
+Vec2D GameObject::getTempPosition() {
+    return tempPosition;
 }

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include "mingl/gui/sprite.h"
+#include "mingl/gui/text.h"
+#include "mingl/shape/rectangle.h"
 #include "mingl/mingl.h"
 #include "mingl/graphics/vec2d.h"
 #include "GameObject.h"
@@ -39,6 +41,8 @@ private:
     vector<unique_ptr<GameObject>> pointColliders;
     vector<unique_ptr<GameObject>> invisibleHitBoxColliders;
     vector<unique_ptr<GameObject>> enemyColliders;
+    Text* scoreText;
+    nsShape::Rectangle* test;
 
 };
 

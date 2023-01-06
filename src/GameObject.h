@@ -18,19 +18,23 @@ public:
 
     void Update();
     void Render();
-    void Move();
+    void Move(bool isPlayer);
     Vec2D getPos();
-    void setPos(const int x, const int y);
+    void setPos(int x, int y);
     void resetObjectDirection();
     void setInvisible();
     void killObject();
     void addScore();
     bool isInvisible() const;
     unsigned getScore() const;
+    void setObjectDirection(unsigned direction);
+    void setTempPosition();
+    Vec2D getTempPosition();
 
 private:
     int xPos;
     int yPos;
+    Vec2D tempPosition;
 
     struct {
         bool up = false;
