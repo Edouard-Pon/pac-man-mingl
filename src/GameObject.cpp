@@ -4,10 +4,10 @@
 
 GameObject::GameObject(const string &fileName, MinGL* win, int x, int y) {
     window = win;
-    sprite = SpriteManager::LoadSprite(fileName, Vec2D(x, y));
+    sprite = SpriteManager::LoadSprite(fileName, x, y);
 
-    xPos = x;
-    yPos = y;
+    xPos = xInitialPosition = x;
+    yPos = yInitialPosition = y;
 }
 
 GameObject::~GameObject() {}
@@ -69,12 +69,24 @@ void GameObject::setInvisible() {
     objectProperty.invisible = true;
 }
 
+void GameObject::setVisible() {
+    objectProperty.invisible = false;
+}
+
 void GameObject::killObject() {
     objectProperty.dead = true;
 }
 
+void GameObject::reviveObject() {
+    objectProperty.dead = false;
+}
+
 void GameObject::addScore() {
     objectProperty.score += 100;
+}
+
+void GameObject::resetScore() {
+    objectProperty.score = 0;
 }
 
 bool GameObject::isInvisible() const {
@@ -114,4 +126,9 @@ Vec2D GameObject::getTempPosition() {
 
 void GameObject::setMovementSpeed(int speed) {
     objectProperty.movementSpeed = speed;
+}
+
+void GameObject::resetPosition() {
+    xPos = xInitialPosition;
+    yPos = yInitialPosition;
 }

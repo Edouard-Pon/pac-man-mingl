@@ -1,8 +1,8 @@
 #include "SpriteManager.h"
 
 
-Sprite *SpriteManager::LoadSprite(const string &fileName, const Vec2D& position) {
-    Sprite* sprite = new Sprite(fileName, position);
+Sprite *SpriteManager::LoadSprite(const string &fileName, const int x, const int y) {
+    Sprite* sprite = new Sprite(fileName, { x, y });
 
     return sprite;
 }

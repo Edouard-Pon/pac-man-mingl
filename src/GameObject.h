@@ -23,6 +23,7 @@ public:
     void setPos(int x, int y);
     void resetObjectDirection();
     void setInvisible();
+    void setVisible();
     void killObject();
     void addScore();
     bool isInvisible() const;
@@ -31,10 +32,15 @@ public:
     void setTempPosition();
     Vec2D getTempPosition();
     void setMovementSpeed(int speed);
+    void resetPosition();
+    void reviveObject();
+    void resetScore();
 
 private:
     int xPos;
     int yPos;
+    int xInitialPosition;
+    int yInitialPosition;
     Vec2D tempPosition;
 
     struct {

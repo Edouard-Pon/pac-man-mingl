@@ -7,7 +7,7 @@
 class SpriteManager {
 
 public:
-    static Sprite* LoadSprite(const string &fileName, const Vec2D& position);
+    static Sprite* LoadSprite(const string &fileName, int x, int y);
 
 };
 
