@@ -154,7 +154,15 @@ void GameObject::setTimer() {
 }
 
 unsigned GameObject::getTimer() {
-    const unsigned time = (chrono::steady_clock::now() - timer) / 1s;
+    const unsigned time =  (chrono::steady_clock::now() - timer) / 1s;
 
     return time;
+}
+
+unsigned GameObject::getInvAnimation() const {
+    return invAnimation;
+}
+
+void GameObject::setInvAnimation(unsigned int currentTimer) {
+    invAnimation = currentTimer;
 }

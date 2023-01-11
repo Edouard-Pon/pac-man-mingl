@@ -42,6 +42,8 @@ public:
     bool isInvincible() const;
     void setTimer();
     unsigned getTimer();
+    unsigned getInvAnimation() const;
+    void setInvAnimation(unsigned currentTimer);
 
 private:
     int xPos;
@@ -50,6 +52,7 @@ private:
     int yInitialPosition;
     Vec2D tempPosition;
     chrono::time_point<chrono::steady_clock> timer;
+    unsigned invAnimation = 0;
 
     struct {
         bool up = false;

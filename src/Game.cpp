@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <thread>
+#include <cmath>
 
 
 Game::Game() {}
@@ -33,7 +34,7 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     for (auto& enemy : enemyColliders) {
         enemy->setObjectDirection(1);
-        enemy->setMovementSpeed(4 * 0);
+        enemy->setMovementSpeed(4);
     }
     player->setLives(3);
 }
@@ -259,25 +260,45 @@ void Game::update() {
                 player->setPos(player->getTempPosition().getX(), player->getTempPosition().getY());
                 player->resetObjectDirection();
             }
-            // wall and enemy
             for (auto& enemy : enemyColliders) {
+                // wall and enemy
                 if (Collision::AABB(enemy->getPos(), wall->getPos(), 40, 40)) {
                     enemy->setPos(enemy->getTempPosition().getX(), enemy->getTempPosition().getY());
                     enemy->resetObjectDirection();
                     enemy->setObjectDirection(std::rand() % 4 + 1);
                 }
-            }
-        }
-        for (auto& invHitVox : invisibleHitBoxColliders) {
-            // invisibleHitBox and player
-            if (Collision::AABB(player->getPos(), invHitVox->getPos(), 1, 1)) {
-                player->resetObjectDirection();
-            }
-            // invisibleHitBox and enemy
-            for (auto& enemy : enemyColliders) {
-                if (Collision::AABB(enemy->getPos(), invHitVox->getPos(), 1, 1)) {
-                    enemy->resetObjectDirection();
-                    enemy->setObjectDirection(std::rand() % 4 + 1);
+                // enemy and player
+                if (Collision::AABB(player->getPos(), enemy->getPos(), 40, 40)) {
+                    if (player->getLives() == 0 && !player->isInvincible()) {
+                        player->killObject();
+                        isGameLost = true;
+                        scoreText->setPosition({ 400, 286 });
+                        scoreText->setTextColor(KYellow);
+                        scoreText->setContent(to_string(player->getScore() * (player->getLives() + 1)));
+                    } else if (!player->isInvincible()) {
+                        player->setInvincible(true);
+                        player->setLives(player->getLives() - 1);
+                        player->setTimer();
+                    }
+                }
+                for (auto& invHitVox : invisibleHitBoxColliders) {
+                    // invisibleHitBox and player
+                    if (Collision::AABB(player->getPos(), invHitVox->getPos(), 1, 1)) {
+                        player->resetObjectDirection();
+                    }
+                    // invisibleHitBox and enemy
+                    if (Collision::AABB(enemy->getPos(), invHitVox->getPos(), 1, 1)) {
+                        enemy->resetObjectDirection();
+                        enemy->setObjectDirection(std::rand() % 4 + 1);
+                    }
+                }
+                if (player->isInvincible()) {
+                    if (player->getTimer() > enemy->getInvAnimation()) {
+                        enemy->setInvAnimation(player->getTimer());
+                        if (enemy->isInvisible()) enemy->setVisible();
+                        else enemy->setInvisible();
+                    }
+                    enemy->setMovementSpeed(2);
                 }
             }
         }
@@ -295,24 +316,17 @@ void Game::update() {
                 }
             }
         }
-        for (auto& enemy : enemyColliders) {
-            // enemy and player
-            if (Collision::AABB(player->getPos(), enemy->getPos(), 40, 40)) {
-                if (player->getLives() == 0 && !player->isInvincible()) {
-                    player->killObject();
-                    isGameLost = true;
-                    scoreText->setPosition({ 400, 286 });
-                    scoreText->setTextColor(KYellow);
-                    scoreText->setContent(to_string(player->getScore()));
-                } else if (!player->isInvincible()) {
-                    player->setInvincible(true);
-                    player->setLives(player->getLives() - 1);
-                    player->setTimer();
-                }
+
+        if (player->getTimer() >= 10) {
+            player->setInvincible(false);
+            for (auto& enemy : enemyColliders) {
+                enemy->setVisible();
+                enemy->setInvAnimation(0);
+                enemy->setMovementSpeed(4);
             }
         }
-
-        if (player->getTimer() == 10) player->setInvincible(false);
+        cout << "Undead Timer: " << player->getTimer() << endl;
+//        cout << "Player Lives: " << player->getLives() << endl;
     }
 }
 

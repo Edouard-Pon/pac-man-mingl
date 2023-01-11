@@ -40,7 +40,6 @@ private:
     bool isGameWon;
     bool isGameLost;
     bool isResetGameLevel;
-    bool test = true;
     MinGL *window;
     GameObject* player;
     Map* levelMap;
