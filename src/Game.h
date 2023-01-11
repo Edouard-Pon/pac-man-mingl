@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "SpriteManager.h"
 #include "Collision.h"
+#include "KeyboardController.h"
 
 
 using namespace std;
@@ -39,6 +40,7 @@ private:
     bool isGameWon;
     bool isGameLost;
     bool isResetGameLevel;
+    bool test = true;
     MinGL *window;
     GameObject* player;
     Map* levelMap;
@@ -48,9 +50,10 @@ private:
     vector<unique_ptr<GameObject>> enemyColliders;
     Text* scoreText;
     GameObject* mainMenuBackground;
+    GameObject* wonMenuBackground;
+    GameObject* lostMenuBackground;
     GameObject* selector;
     unsigned selectorCount;
-    unsigned selectorTimer;
     Text* debugGameWonText;
     Text* debugGameLostText;
     Text* debugGameMainMenuText;

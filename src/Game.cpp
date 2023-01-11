@@ -15,13 +15,14 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
     isGameWon = false;
     isGameLost = false;
     selectorCount = 0;
-    selectorTimer = 150;
     isResetGameLevel = false;
 
     player = new GameObject("../assets/pacmanSkin.si2", window, 10 * 40, 14 * 40);
     scoreRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(140, 30), KBlack);
-    scoreText = new Text(Vec2D(10, 20), "Score: 0", KWhite, GlutFont::BITMAP_HELVETICA_18);
+    scoreText = new Text(Vec2D(10, 10), "Score: 0", KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
     mainMenuBackground = new GameObject("../assets/mainMenu.si2", window, 0, 0);
+    wonMenuBackground = new GameObject("../assets/wonMenu.si2", window, 0, 0);
+    lostMenuBackground = new GameObject("../assets/lostMenu.si2", window, 0, 0);
     selector = new GameObject("../assets/selector20x20.si2", window, 300, 260);
     debugGameLostText = new Text(Vec2D(10, 20), "Lost Screen", KWhite, GlutFont::BITMAP_HELVETICA_18);
     debugGameWonText = new Text(Vec2D(10, 20), "Won Screen", KWhite, GlutFont::BITMAP_HELVETICA_18);
@@ -32,8 +33,9 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     for (auto& enemy : enemyColliders) {
         enemy->setObjectDirection(1);
-        enemy->setMovementSpeed(4);
+        enemy->setMovementSpeed(4 * 0);
     }
+    player->setLives(3);
 }
 
 void Game::handleEvents() {
@@ -64,11 +66,11 @@ void Game::update() {
                 if (window->isPressed({'s', false})) {
                     ++selectorCount;
                     selector->setPos(290, 300);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     selectorCount = 5;
                     selector->setPos(310, 500);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     isMainMenu = false;
                     if (isResetGameLevel) {
@@ -78,8 +80,13 @@ void Game::update() {
                         player->reviveObject();
                         player->resetScore();
                         scoreText->setContent("Score: " + to_string(player->getScore()));
+                        scoreText->setPosition({ 10, 20 });
+                        scoreText->setTextColor(KWhite);
                         isResetGameLevel = false;
                     }
+                    selectorCount = 0;
+                    selector->setPos(300, 440);
+                    KeyboardController::resetAllKeys(window);
                     this_thread::sleep_for(chrono::milliseconds(500));
                 }
                 break;
@@ -87,70 +94,69 @@ void Game::update() {
                 if (window->isPressed({'s', false})) {
                     ++selectorCount;
                     selector->setPos(160, 340);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     --selectorCount;
                     selector->setPos(300, 260);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + LEVELS WIP");
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 2:
                 if (window->isPressed({'s', false})) {
                     ++selectorCount;
                     selector->setPos(230, 380);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     --selectorCount;
                     selector->setPos(290, 300);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + CUSTOM DIFFICULTY WIP");
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 3:
                 if (window->isPressed({'s', false})) {
                     ++selectorCount;
                     selector->setPos(300, 420);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     --selectorCount;
                     selector->setPos(160, 340);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + MULTIPLAYER WIP");
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 4:
                 if (window->isPressed({'s', false})) {
                     ++selectorCount;
                     selector->setPos(310, 500);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     --selectorCount;
                     selector->setPos(230, 380);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + SCORES WIP");
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 5:
                 if (window->isPressed({'s', false})) {
                     selectorCount = 0;
                     selector->setPos(300, 260);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'w', false})) {
                     --selectorCount;
                     selector->setPos(300, 420);
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
+                    KeyboardController::resetAllKeys(window);
                 } else if (window->isPressed({'e', false})) {
                     isRunning = false;
-                    this_thread::sleep_for(chrono::milliseconds(selectorTimer));
                 }
                 break;
             default:
@@ -158,9 +164,79 @@ void Game::update() {
         }
         selector->Update();
     } else if (isGameWon) {
-
+        switch (selectorCount) {
+            case 0:
+                if (window->isPressed({'s', false})) {
+                    ++selectorCount;
+                    selector->setPos(310, 500);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'w', false})) {
+                    selectorCount = 1;
+                    selector->setPos(310, 500);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'e', false})) {
+                    selector->setPos(300, 260);
+                    isGameWon = false;
+                    isMainMenu = true;
+                    isResetGameLevel = true;
+                    debugGameMainMenuText->setContent("Main Menu Screen");
+                    KeyboardController::resetAllKeys(window);
+                }
+                break;
+            case 1:
+                if (window->isPressed({'s', false})) {
+                    selectorCount = 0;
+                    selector->setPos(300, 440);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'w', false})) {
+                    --selectorCount;
+                    selector->setPos(300, 440);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'e', false})) {
+                    isRunning = false;
+                }
+                break;
+            default:
+                break;
+        }
+        selector->Update();
     } else if (isGameLost) {
-
+        switch (selectorCount) {
+            case 0:
+                if (window->isPressed({'s', false})) {
+                    ++selectorCount;
+                    selector->setPos(310, 500);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'w', false})) {
+                    selectorCount = 1;
+                    selector->setPos(310, 500);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'e', false})) {
+                    selector->setPos(300, 260);
+                    isGameLost = false;
+                    isMainMenu = true;
+                    isResetGameLevel = true;
+                    debugGameMainMenuText->setContent("Main Menu Screen");
+                    KeyboardController::resetAllKeys(window);
+                }
+                break;
+            case 1:
+                if (window->isPressed({'s', false})) {
+                    selectorCount = 0;
+                    selector->setPos(300, 440);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'w', false})) {
+                    --selectorCount;
+                    selector->setPos(300, 440);
+                    KeyboardController::resetAllKeys(window);
+                } else if (window->isPressed({'e', false})) {
+                    isRunning = false;
+                }
+                break;
+            default:
+                break;
+        }
+        selector->Update();
     } else {
         player->setTempPosition();
         for (auto& enemy : enemyColliders) {
@@ -211,16 +287,32 @@ void Game::update() {
                 if (!scorePoint->isInvisible()) player->addScore();
                 scorePoint->setInvisible();
                 scoreText->setContent("Score: " + to_string(player->getScore()));
-                if (player->getScore() == pointColliders.size() * 100) isGameWon = true;
+                if (player->getScore() == pointColliders.size() * 100) {
+                    isGameWon = true;
+                    scoreText->setPosition({ 400, 286 });
+                    scoreText->setTextColor(KYellow);
+                    scoreText->setContent(to_string(player->getScore()));
+                }
             }
         }
         for (auto& enemy : enemyColliders) {
             // enemy and player
             if (Collision::AABB(player->getPos(), enemy->getPos(), 40, 40)) {
-                player->killObject();
-                isGameLost = true;
+                if (player->getLives() == 0 && !player->isInvincible()) {
+                    player->killObject();
+                    isGameLost = true;
+                    scoreText->setPosition({ 400, 286 });
+                    scoreText->setTextColor(KYellow);
+                    scoreText->setContent(to_string(player->getScore()));
+                } else if (!player->isInvincible()) {
+                    player->setInvincible(true);
+                    player->setLives(player->getLives() - 1);
+                    player->setTimer();
+                }
             }
         }
+
+        if (player->getTimer() == 10) player->setInvincible(false);
     }
 }
 
@@ -232,9 +324,15 @@ void Game::render() {
         selector->Render();
         *window << *debugGameMainMenuText;
     } else if (isGameWon) {
+        wonMenuBackground->Render();
+        selector->Render();
         *window << *debugGameWonText;
+        *window << *scoreText;
     } else if (isGameLost) {
+        lostMenuBackground->Render();
+        selector->Render();
         *window << *debugGameLostText;
+        *window << *scoreText;
     } else {
         for (auto& wall : wallColliders) wall->Render();
         for (auto& scorePoint : pointColliders) scorePoint->Render();

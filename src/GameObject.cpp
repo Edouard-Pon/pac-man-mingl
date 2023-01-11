@@ -132,3 +132,29 @@ void GameObject::resetPosition() {
     xPos = xInitialPosition;
     yPos = yInitialPosition;
 }
+
+void GameObject::setLives(const unsigned lives) {
+    objectProperty.lives = lives;
+}
+
+unsigned GameObject::getLives() const {
+    return objectProperty.lives;
+}
+
+void GameObject::setInvincible(bool isInvincible) {
+    objectProperty.invincible = isInvincible;
+}
+
+bool GameObject::isInvincible() const {
+    return objectProperty.invincible;
+}
+
+void GameObject::setTimer() {
+    timer = chrono::steady_clock::now();
+}
+
+unsigned GameObject::getTimer() {
+    const unsigned time = (chrono::steady_clock::now() - timer) / 1s;
+
+    return time;
+}

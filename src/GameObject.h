@@ -2,6 +2,7 @@
 #define PACMAN_MINGL_GAMEOBJECT_H
 
 #include <iostream>
+#include <thread>
 #include "mingl/gui/sprite.h"
 #include "mingl/mingl.h"
 #include "mingl/graphics/vec2d.h"
@@ -35,6 +36,12 @@ public:
     void resetPosition();
     void reviveObject();
     void resetScore();
+    void setLives(unsigned lives);
+    unsigned getLives() const;
+    void setInvincible(bool isInvincible);
+    bool isInvincible() const;
+    void setTimer();
+    unsigned getTimer();
 
 private:
     int xPos;
@@ -42,6 +49,7 @@ private:
     int xInitialPosition;
     int yInitialPosition;
     Vec2D tempPosition;
+    chrono::time_point<chrono::steady_clock> timer;
 
     struct {
         bool up = false;
@@ -52,6 +60,8 @@ private:
         bool dead = false;
         unsigned score = 0;
         int movementSpeed = 5;
+        unsigned lives = 3;
+        bool invincible = false;
     } objectProperty;
 
     Sprite* sprite;
