@@ -1,40 +1,11 @@
 #include "Map.h"
 
-// For Test; Changing Soon
-int testMap[16][21] = {
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,2,2,2,3,2,2,2,2,1,1,1,2,2,2,2,3,2,2,2,1},
-        {1,2,1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1,1,2,1},
-        {1,3,2,2,3,2,3,2,3,2,2,2,3,2,3,2,3,2,2,3,1},
-        {1,2,1,1,2,1,2,1,1,1,1,1,1,1,2,1,2,1,1,2,1},
-        {1,2,2,2,3,1,2,3,2,2,1,2,2,3,2,1,3,2,2,2,1},
-        {1,1,1,1,2,1,1,2,1,2,1,2,1,2,1,1,2,1,1,1,1},
-        {1,1,1,1,2,1,2,3,2,3,2,3,2,3,2,1,2,1,1,1,1},
-        {1,2,2,2,3,2,3,1,1,0,1,0,1,1,3,2,3,2,2,2,1},
-        {1,2,1,1,2,1,2,1,4,5,6,7,8,1,2,1,2,1,1,2,1},
-        {1,2,2,2,3,1,2,1,0,1,1,1,0,1,2,1,3,2,2,2,1},
-        {1,1,1,1,3,2,3,2,3,2,3,2,3,2,3,2,3,1,1,1,1},
-        {1,2,2,2,3,1,1,1,2,1,2,1,2,1,1,1,3,2,2,2,1},
-        {1,2,1,1,3,2,2,1,2,1,2,1,2,1,2,2,3,1,1,2,1},
-        {1,2,2,2,2,1,2,2,3,2,3,2,3,2,2,1,2,2,2,2,1},
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
-Map::Map() {
-    TestLoadMap(testMap);
-}
+Map::Map() {}
 
 Map::~Map() {}
 
-void Map::TestLoadMap(int arr[16][21]) {
-    for (unsigned row = 0; row < 16; ++row) {
-        for (unsigned column = 0; column < 21; ++column) {
-            map[row][column] = arr[row][column];
-        }
-    }
-}
-
-void Map::LoadMap(MinGL* window, vector<unique_ptr<GameObject>>& wallColliders,
+void Map::loadMap(MinGL* window, vector<unique_ptr<GameObject>>& wallColliders,
                   vector<unique_ptr<GameObject>>& pointColliders,
                   vector<unique_ptr<GameObject>>& invisibleHitBoxColliders,
                   vector<unique_ptr<GameObject>>& enemyColliders) {
@@ -42,7 +13,7 @@ void Map::LoadMap(MinGL* window, vector<unique_ptr<GameObject>>& wallColliders,
 
     for (unsigned row = 0; row < 16; ++row) {
         for (unsigned column = 0; column < 21; ++column) {
-            type = map[row][column];
+            type = levelMap[row][column];
 
             switch (type) {
                 case 1:
@@ -82,4 +53,8 @@ void Map::LoadMap(MinGL* window, vector<unique_ptr<GameObject>>& wallColliders,
             }
         }
     }
+}
+
+void Map::initMap(ConfigManager &levelMapData) {
+    levelMap = levelMapData.getLevelData();
 }

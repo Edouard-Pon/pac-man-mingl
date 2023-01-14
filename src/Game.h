@@ -58,6 +58,14 @@ private:
     Text* debugGameMainMenuText;
     nsShape::Rectangle* scoreRect;
 
+    struct {
+        char keyUp;
+        char keyLeft;
+        char keyDown;
+        char keyRight;
+        char keySelect;
+    } keyboardCfg;
+
 };
 
 

@@ -25,19 +25,19 @@ void GameObject::Move(const bool isPlayer) {
     Vec2D spritePos = sprite->getPosition();
 
     if (isPlayer) {
-        if (window->isPressed({'w', false})) {
+        if (window->isPressed({keyboardSettings.up, false})) {
             resetObjectDirection();
             objectProperty.up = true;
         }
-        if (window->isPressed({'s', false})) {
+        if (window->isPressed({keyboardSettings.down, false})) {
             resetObjectDirection();
             objectProperty.down = true;
         }
-        if (window->isPressed({'a', false})) {
+        if (window->isPressed({keyboardSettings.left, false})) {
             resetObjectDirection();
             objectProperty.left = true;
         }
-        if (window->isPressed({'d', false})) {
+        if (window->isPressed({keyboardSettings.right, false})) {
             resetObjectDirection();
             objectProperty.right = true;
         }
@@ -165,4 +165,11 @@ unsigned GameObject::getInvAnimation() const {
 
 void GameObject::setInvAnimation(unsigned int currentTimer) {
     invAnimation = currentTimer;
+}
+
+void GameObject::initKeyboardConfig(ConfigManager *cfg) {
+    keyboardSettings.up = *cfg->getData("key.up").c_str();
+    keyboardSettings.left = *cfg->getData("key.left").c_str();
+    keyboardSettings.down = *cfg->getData("key.down").c_str();
+    keyboardSettings.right = *cfg->getData("key.right").c_str();
 }

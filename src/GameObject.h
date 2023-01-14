@@ -6,6 +6,7 @@
 #include "mingl/gui/sprite.h"
 #include "mingl/mingl.h"
 #include "mingl/graphics/vec2d.h"
+#include "ConfigManager.h"
 
 using namespace std;
 using namespace nsGraphics;
@@ -44,6 +45,7 @@ public:
     unsigned getTimer();
     unsigned getInvAnimation() const;
     void setInvAnimation(unsigned currentTimer);
+    void initKeyboardConfig(ConfigManager* cfg);
 
 private:
     int xPos;
@@ -66,6 +68,13 @@ private:
         unsigned lives = 3;
         bool invincible = false;
     } objectProperty;
+
+    struct {
+        char up;
+        char left;
+        char down;
+        char right;
+    } keyboardSettings;
 
     Sprite* sprite;
     MinGL* window;

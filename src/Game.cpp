@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "ConfigManager.h"
 #include <thread>
 #include <cmath>
 
@@ -8,6 +9,15 @@ Game::Game() {}
 Game::~Game() {}
 
 void Game::init(const string &title, int xPos, int yPos, int width, int height) {
+    auto configManager = new ConfigManager();
+    configManager->parseConfig("../config.yaml");
+
+    keyboardCfg.keyUp = *configManager->getData("key.up").c_str();
+    keyboardCfg.keyLeft = *configManager->getData("key.left").c_str();
+    keyboardCfg.keyDown = *configManager->getData("key.down").c_str();
+    keyboardCfg.keyRight = *configManager->getData("key.right").c_str();
+    keyboardCfg.keySelect = *configManager->getData("key.select").c_str();
+
     window = new MinGL(title, Vec2D(width, height), Vec2D(xPos, yPos), KBlack);
     window->initGlut();
     window->initGraphic();
@@ -18,7 +28,8 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
     selectorCount = 0;
     isResetGameLevel = false;
 
-    player = new GameObject("../assets/pacmanSkin.si2", window, 10 * 40, 14 * 40);
+    player = new GameObject("../assets/" + configManager->getPacmanSkin() + ".si2", window, 10 * 40, 14 * 40);
+    player->initKeyboardConfig(configManager);
     scoreRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(140, 30), KBlack);
     scoreText = new Text(Vec2D(10, 10), "Score: 0", KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
     mainMenuBackground = new GameObject("../assets/mainMenu.si2", window, 0, 0);
@@ -30,49 +41,35 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
     debugGameMainMenuText = new Text(Vec2D(10, 20), "Main Menu Screen", KWhite, GlutFont::BITMAP_HELVETICA_18);
     levelMap = new Map();
 
-    levelMap->LoadMap(window, wallColliders, pointColliders, invisibleHitBoxColliders, enemyColliders);
+    levelMap->initMap(*configManager);
+    levelMap->loadMap(window, wallColliders, pointColliders, invisibleHitBoxColliders, enemyColliders);
 
     for (auto& enemy : enemyColliders) {
         enemy->setObjectDirection(1);
-        enemy->setMovementSpeed(4);
+        enemy->setMovementSpeed(stoi(configManager->getData("enemy.speed")));
     }
-    player->setLives(3);
+    player->setLives(stoi(configManager->getData("player.lives")));
+    player->setMovementSpeed(stoi(configManager->getData("player.speed")));
 }
 
 void Game::handleEvents() {
     if (window->isOpen() == 0) isRunning = false;
-    if (isMainMenu) {
-
-    } else if (isGameWon) {
-        if (window->isPressed({'m', false})) {
-            isGameWon = false;
-            isMainMenu = true;
-            isResetGameLevel = true;
-            debugGameMainMenuText->setContent("Main Menu Screen");
-        }
-    } else if (isGameLost) {
-        if (window->isPressed({'m', false})) {
-            isGameLost = false;
-            isMainMenu = true;
-            isResetGameLevel = true;
-            debugGameMainMenuText->setContent("Main Menu Screen");
-        }
-    }
 }
 
 void Game::update() {
     if (isMainMenu) {
+        // Should move to KeyboardController
         switch (selectorCount) {
             case 0:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(290, 300);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     selectorCount = 5;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     isMainMenu = false;
                     if (isResetGameLevel) {
                         for (auto& enemy : enemyColliders) enemy->resetPosition();
@@ -92,71 +89,71 @@ void Game::update() {
                 }
                 break;
             case 1:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(160, 340);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(300, 260);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + LEVELS WIP");
                     KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 2:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(230, 380);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(290, 300);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + CUSTOM DIFFICULTY WIP");
                     KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 3:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(300, 420);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(160, 340);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + MULTIPLAYER WIP");
                     KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 4:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(230, 380);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     debugGameMainMenuText->setContent("Main Menu Screen + SCORES WIP");
                     KeyboardController::resetAllKeys(window);
                 }
                 break;
             case 5:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     selectorCount = 0;
                     selector->setPos(300, 260);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(300, 420);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     isRunning = false;
                 }
                 break;
@@ -165,17 +162,18 @@ void Game::update() {
         }
         selector->Update();
     } else if (isGameWon) {
+        // Should move to KeyboardController
         switch (selectorCount) {
             case 0:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     selectorCount = 1;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     selector->setPos(300, 260);
                     isGameWon = false;
                     isMainMenu = true;
@@ -185,15 +183,15 @@ void Game::update() {
                 }
                 break;
             case 1:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     selectorCount = 0;
                     selector->setPos(300, 440);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(300, 440);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     isRunning = false;
                 }
                 break;
@@ -202,17 +200,18 @@ void Game::update() {
         }
         selector->Update();
     } else if (isGameLost) {
+        // Should move to KeyboardController
         switch (selectorCount) {
             case 0:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     ++selectorCount;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     selectorCount = 1;
                     selector->setPos(310, 500);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     selector->setPos(300, 260);
                     isGameLost = false;
                     isMainMenu = true;
@@ -222,15 +221,15 @@ void Game::update() {
                 }
                 break;
             case 1:
-                if (window->isPressed({'s', false})) {
+                if (window->isPressed({keyboardCfg.keyDown, false})) {
                     selectorCount = 0;
                     selector->setPos(300, 440);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'w', false})) {
+                } else if (window->isPressed({keyboardCfg.keyUp, false})) {
                     --selectorCount;
                     selector->setPos(300, 440);
                     KeyboardController::resetAllKeys(window);
-                } else if (window->isPressed({'e', false})) {
+                } else if (window->isPressed({keyboardCfg.keySelect, false})) {
                     isRunning = false;
                 }
                 break;
@@ -317,7 +316,7 @@ void Game::update() {
             }
         }
 
-        if (player->getTimer() >= 10) {
+        if (player->getTimer() == 10) {
             player->setInvincible(false);
             for (auto& enemy : enemyColliders) {
                 enemy->setVisible();
@@ -325,8 +324,6 @@ void Game::update() {
                 enemy->setMovementSpeed(4);
             }
         }
-        cout << "Undead Timer: " << player->getTimer() << endl;
-//        cout << "Player Lives: " << player->getLives() << endl;
     }
 }
 
