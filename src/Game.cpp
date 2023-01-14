@@ -30,8 +30,9 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     player = new GameObject("../assets/" + configManager->getPacmanSkin() + ".si2", window, 10 * 40, 14 * 40);
     player->initKeyboardConfig(configManager);
-    scoreRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(140, 30), KBlack);
+    scoreRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(840, 30), KBlack);
     scoreText = new Text(Vec2D(10, 10), "Score: 0", KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
+    livesText = new Text(Vec2D(210, 10), "Lives: " + configManager->getData("player.lives"), KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
     mainMenuBackground = new GameObject("../assets/mainMenu.si2", window, 0, 0);
     wonMenuBackground = new GameObject("../assets/wonMenu.si2", window, 0, 0);
     lostMenuBackground = new GameObject("../assets/lostMenu.si2", window, 0, 0);
@@ -78,7 +79,7 @@ void Game::update() {
                         player->reviveObject();
                         player->resetScore();
                         scoreText->setContent("Score: " + to_string(player->getScore()));
-                        scoreText->setPosition({ 10, 20 });
+                        scoreText->setPosition({ 10, 10 });
                         scoreText->setTextColor(KWhite);
                         isResetGameLevel = false;
                     }
@@ -273,11 +274,12 @@ void Game::update() {
                         isGameLost = true;
                         scoreText->setPosition({ 400, 286 });
                         scoreText->setTextColor(KYellow);
-                        scoreText->setContent(to_string(player->getScore() * (player->getLives() + 1)));
+                        scoreText->setContent(to_string(player->getScore()));
                     } else if (!player->isInvincible()) {
                         player->setInvincible(true);
                         player->setLives(player->getLives() - 1);
                         player->setTimer();
+                        livesText->setContent("Lives: " + to_string(player->getLives()));
                     }
                 }
                 for (auto& invHitVox : invisibleHitBoxColliders) {
@@ -297,7 +299,8 @@ void Game::update() {
                         if (enemy->isInvisible()) enemy->setVisible();
                         else enemy->setInvisible();
                     }
-                    enemy->setMovementSpeed(2);
+                    // Off due to bug: stuck in corridor and can't turn
+//                    enemy->setMovementSpeed(2);
                 }
             }
         }
@@ -311,7 +314,7 @@ void Game::update() {
                     isGameWon = true;
                     scoreText->setPosition({ 400, 286 });
                     scoreText->setTextColor(KYellow);
-                    scoreText->setContent(to_string(player->getScore()));
+                    scoreText->setContent(to_string(player->getScore() * (player->getLives() + 1)));
                 }
             }
         }
@@ -352,6 +355,7 @@ void Game::render() {
 
         *window << *scoreRect;
         *window << *scoreText;
+        *window << *livesText;
         player->Render();
     }
 

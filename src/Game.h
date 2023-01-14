@@ -48,6 +48,7 @@ private:
     vector<unique_ptr<GameObject>> invisibleHitBoxColliders;
     vector<unique_ptr<GameObject>> enemyColliders;
     Text* scoreText;
+    Text* livesText;
     GameObject* mainMenuBackground;
     GameObject* wonMenuBackground;
     GameObject* lostMenuBackground;
