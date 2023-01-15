@@ -1,3 +1,8 @@
+/*!
+ * @file GameObject.cpp
+ * @brief GameObject Class
+ */
+
 #include "GameObject.h"
 #include "SpriteManager.h"
 
@@ -163,7 +168,7 @@ unsigned GameObject::getInvAnimation() const {
     return invAnimation;
 }
 
-void GameObject::setInvAnimation(unsigned int currentTimer) {
+void GameObject::setInvAnimation(unsigned currentTimer) {
     invAnimation = currentTimer;
 }
 

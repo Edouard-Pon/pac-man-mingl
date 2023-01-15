@@ -1,3 +1,8 @@
+/*!
+ * @file ConfigManager.cpp
+ * @brief config.yaml parser
+ */
+
 #include "ConfigManager.h"
 
 

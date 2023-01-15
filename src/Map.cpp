@@ -1,3 +1,8 @@
+/*!
+ * @file Map.cpp
+ * @brief Map Class
+ */
+
 #include "Map.h"
 
 

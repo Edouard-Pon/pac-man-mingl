@@ -1,0 +1,22 @@
+digraph "Game::init"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Game::init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Initialize the Game."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="GameObject::initKeyboard\lConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a90c5e8a351dbb2e2af678ba0b269094f",tooltip="Initialize keyboard config."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ConfigManager::getData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_config_manager.html#af56910ae1bacfa07176c5f2608cd6ba9",tooltip="Return config data."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Map::initMap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_map.html#a52cc119f334fa5b61498d01ffa6c35ac",tooltip="Initialize level map."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ConfigManager::getLevelData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_config_manager.html#a6a6709a955785b7880a0037a2dbe91ae",tooltip="Return level data."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Map::loadMap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_map.html#a0950abe784f8632ae1246dbeb838522f",tooltip="Level map loader."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="GameObject::setLives",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a236ad1a16e679d7ac7f7e03004715d40",tooltip="Set number of lives to game object."];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="GameObject::setMovementSpeed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#ac002ea307bfefdef34e7e325754d2c6a",tooltip="Set movement speed to game object."];
+}

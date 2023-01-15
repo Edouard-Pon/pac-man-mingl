@@ -1,3 +1,8 @@
+/*!
+ * @file Game.cpp
+ * @brief Game Class
+ */
+
 #include "Game.h"
 #include "ConfigManager.h"
 #include <thread>
@@ -30,7 +35,7 @@ void Game::init(const string &title, int xPos, int yPos, int width, int height) 
 
     player = new GameObject("../assets/" + configManager->getPacmanSkin() + ".si2", window, 10 * 40, 14 * 40);
     player->initKeyboardConfig(configManager);
-    scoreRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(840, 30), KBlack);
+    uIRect = new nsShape::Rectangle(Vec2D(0, 0), Vec2D(840, 30), KBlack);
     scoreText = new Text(Vec2D(10, 10), "Score: 0", KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
     livesText = new Text(Vec2D(210, 10), "Lives: " + configManager->getData("player.lives"), KWhite, GlutFont::BITMAP_HELVETICA_18, Text::HorizontalAlignment::ALIGNH_LEFT, Text::VerticalAlignment::ALIGNV_CENTER);
     mainMenuBackground = new GameObject("../assets/mainMenu.si2", window, 0, 0);
@@ -353,7 +358,7 @@ void Game::render() {
         for (auto& invHitBox : invisibleHitBoxColliders) invHitBox->Render();
         for (auto& enemy : enemyColliders) enemy->Render();
 
-        *window << *scoreRect;
+        *window << *uIRect;
         *window << *scoreText;
         *window << *livesText;
         player->Render();

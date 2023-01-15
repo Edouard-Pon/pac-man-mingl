@@ -1,0 +1,52 @@
+digraph "Game::update"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Game::update",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Update the game, player or enemy position, collision etc."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Collision::AABB",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_collision.html#a7e3f7e5571475607405e2a3669626b91",tooltip="AABB Collision system. Detect collision between two objects."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="GameObject::addScore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a8e85ab179914805cfb7d6069cf5bcdff",tooltip="Add score to game object (+100)"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="GameObject::getLives",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#ab688aba95584248a084ba928848241fe",tooltip="Return number of game object lives."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="GameObject::getPos",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a7e249004e5eb7972be86c01dbe32dcb1",tooltip="Return current object position in Vec2D containing x and y."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="GameObject::getScore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a32a3fcc65c3ea49322a3ce8b84802564",tooltip="Return game object score."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="GameObject::getTempPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a3cba54fcaf78f74352a3d8824b9304f1",tooltip="Return temporary position created previously."];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="GameObject::getTimer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a31982427a0d5058ae4dfd9f5ccbda4c7",tooltip="Return timer in seconds."];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="GameObject::isInvincible",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#ae3f596f7a779f415d467a8ef9c0a02b9",tooltip="Return if the game object is Invincible or not."];
+  Node1 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="GameObject::killObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a0c2d5880f60a68cc6a191978094dfc66",tooltip="Kill the game object."];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="GameObject::Move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a34f82f5ee35fe132d64ba0279522b951",tooltip="Move the game object."];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="GameObject::resetObjectDirection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a3b956945d54a6ed548779c2ca55f984b",tooltip="Reset all 4 object directions to false (objectProperty.up = false; etc)"];
+  Node1 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="KeyboardController\l::resetAllKeys",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_keyboard_controller.html#a9527d6111866a6e3a18273357d37e4ec",tooltip="Reset keyboard key handlers."];
+  Node1 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="GameObject::resetPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a16df9a187e3a2f8d767df58b9ab78086",tooltip="Reset game object position to initial (start of the game)"];
+  Node1 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="GameObject::resetScore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a14941d30dd44d5833e256191d2b51948",tooltip="Reset game object score to 0."];
+  Node1 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="GameObject::reviveObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#ac043f40f28ce598ae14ca39926e94bdc",tooltip="Revive the game object."];
+  Node1 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="GameObject::setInvincible",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a19592d28b18819410a189429e1f9acfe",tooltip="Set game object Invincible or not."];
+  Node17 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="GameObject::setLives",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a236ad1a16e679d7ac7f7e03004715d40",tooltip="Set number of lives to game object."];
+  Node1 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="GameObject::setPos",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#aa376bda79b38c18667226ef1d6a66da3",tooltip="Set new position for game object with x and y."];
+  Node1 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="GameObject::setTempPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a58456feabee65500b34b09ff2abd9b16",tooltip="Set temporary position of game object."];
+  Node1 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="GameObject::setTimer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a0c5cf431457234175b0c409262784039",tooltip="Initialize timer for game object."];
+  Node1 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="GameObject::Update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html#a1bd14aa169f501f94f1721943d716535",tooltip="Update the game object position."];
+}

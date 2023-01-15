@@ -1,3 +1,8 @@
+/*!
+ * @file SpriteManager.cpp
+ * @brief Sprite Manager Class
+ */
+
 #include "SpriteManager.h"
 
 

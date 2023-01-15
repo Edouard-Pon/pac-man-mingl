@@ -1,3 +1,8 @@
+/*!
+ * @file KeyboardController.cpp
+ * @brief Keyboard Controller Class
+ */
+
 #include "KeyboardController.h"
 
 void KeyboardController::resetAllKeys(MinGL *window) {

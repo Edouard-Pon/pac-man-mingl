@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.16)
 project(pacman_mingl)
 
-file(GLOB_RECURSE LIB_HEADERS libs/*)
+file(GLOB_RECURSE LIB_HEADERS libs/mingl/*)
 file(GLOB_RECURSE SRC src/*)
 
 add_executable(pacman_mingl ${LIB_HEADERS} ${SRC})

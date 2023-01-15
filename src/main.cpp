@@ -1,3 +1,8 @@
+/*!
+ * @file main.cpp
+ * @brief Pac-Man Game Loop
+ */
+
 #include "Game.h"
 #include <thread>
 
