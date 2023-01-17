@@ -5,10 +5,11 @@
 
 #include "KeyboardController.h"
 
-void KeyboardController::resetAllKeys(MinGL *window) {
-    window->resetKey({'w', false});
-    window->resetKey({'s', false});
-    window->resetKey({'a', false});
-    window->resetKey({'d', false});
-    window->resetKey({'e', false});
+void KeyboardController::resetAllKeys(MinGL *window, char keyUp, char keyDown,
+                                      char keyLeft, char keyRight, char keySelect) {
+    window->resetKey({keyUp, false});
+    window->resetKey({keyDown, false});
+    window->resetKey({keyLeft, false});
+    window->resetKey({keyRight, false});
+    window->resetKey({keySelect, false});
 }

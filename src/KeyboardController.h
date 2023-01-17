@@ -14,13 +14,18 @@
 class KeyboardController {
 
 public:
-    /*!
-     * @brief Reset keyboard key handlers
-     * @param window
-     * @fn static void resetAllKeys(MinGL* window);
-     */
-    static void resetAllKeys(MinGL* window);
-
+     /*!
+      * @brief Reset keyboard key handlers
+      * @param window
+      * @param keyUp
+      * @param keyDown
+      * @param keyLeft
+      * @param keyRight
+      * @param keySelect
+      * @fn static void resetAllKeys(MinGL* window);
+      */
+    static void resetAllKeys(MinGL* window, char keyUp, char keyDown,
+                             char keyLeft, char keyRight, char keySelect);
 };
 
 
